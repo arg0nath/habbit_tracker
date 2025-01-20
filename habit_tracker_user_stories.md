@@ -245,7 +245,7 @@ _As a user, I want my updated name to be displayed in the app's header after I c
 
 ---
 
-## User Stories for Habits Page
+## User Stories for Details / Habits Page
 
 ### **Title: Add a New Habit**
 _As a user, I want to add new habits on the habits configuration page, so that I can manage and update my habits as needed._
