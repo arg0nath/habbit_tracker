@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habbit_tracker/habit_tracker_screen.dart';
+import 'package:habbit_tracker/utilities/toast.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => HabitTrackerScreen(username: username),
         ),
       );
+    } else {
+      showToast("Incorrect email or password", color: Colors.red);
     }
   }
 

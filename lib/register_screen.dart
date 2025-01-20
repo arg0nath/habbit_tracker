@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:habbit_tracker/habit_tracker_screen.dart';
+import 'package:habbit_tracker/utilities/toast.dart';
 
 import 'login_screen.dart';
 
@@ -36,23 +37,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  void _showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-  }
-
   void _register() async {
     final name = _nameController.text;
     final username = _usernameController.text;
 
     if (username.isEmpty || name.isEmpty) {
-      _showToast('Please fill in all fields');
+      showToast('Please fill in all fields', color: Colors.red);
       return;
     }
 
