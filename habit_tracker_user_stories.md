@@ -176,7 +176,7 @@ _As a user, I want to sign out of my account using an option in the menu, so tha
 
 ---
 
-## Exercise 5: User Stories for Profile Page
+## User Stories for Profile Page
 
 ### **Title: View Personal Information**
 _As a user, I want to view my saved name, username, age, and country on my profile page, so that I can see the details I provided during registration._
