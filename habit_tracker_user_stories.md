@@ -346,3 +346,81 @@ _As a user, I want to see both completed and incomplete habits in my report, so 
 **Notes:**
 - The report should show all habits the user is tracking, not just the completed ones.
 - Ensure incomplete habits are visually distinguished, possibly with an empty status or color-coding.
+
+# User Stories for Notifications Page
+
+## Enable/Disable Notifications
+
+**Title:**  
+_As a user, I want to be able to enable or disable notifications for the app, so that I can choose whether or not to receive reminders for my habits._
+
+**Acceptance Criteria:**
+1. The notifications page should include an option to enable or disable notifications globally for the app.
+2. When notifications are enabled, the user should receive reminders for all selected habits.
+3. When notifications are disabled, the user should not receive any notifications or reminders.
+4. The user should be able to toggle this setting easily with a switch or checkbox (e.g., "Enable Notifications" toggle).
+5. The notification setting should persist, even if the user logs out or closes the app.
+
+**Priority:** High
+
+**Story Points:** 3
+
+**Notes:**
+- Include an explanation or tooltip to inform the user about the implications of disabling notifications (e.g., "You will not receive reminders for your habits if notifications are disabled").
+- Consider the user’s preferences for not being overwhelmed with notifications but ensuring they stay on track with their habits.
+
+---
+
+## Add Habits for Notifications
+
+**Title:**  
+_As a user, I want to select specific habits to receive notifications for, so that I only get reminders for the habits I am actively working on._
+
+**Acceptance Criteria:**
+1. The notifications page should display a list of all the user's habits.
+2. Next to each habit, there should be a checkbox or toggle to enable/disable notifications for that specific habit.
+3. The user should be able to select or deselect habits for notifications individually.
+4. Once a habit is selected for notifications, the user should start receiving reminders only for those selected habits.
+5. The habit list should be organized in a clear way, possibly sorted by habit name or frequency.
+
+**Priority:** High
+
+**Story Points:** 4
+
+**Notes:**
+- Provide a default option where all habits are selected for notifications when the user first accesses the notifications page.
+- Include a "Select All" and "Deselect All" option for convenience.
+- Ensure that enabling notifications for a habit does not overwrite the global notification setting.
+
+---
+
+## Set Notification Times
+
+**Title:**  
+_As a user, I want to have the option to receive notifications three times a day (morning, afternoon, evening) for all selected habits, so that I get timely reminders throughout the day to complete my habits._
+
+**Acceptance Criteria:**
+1. The user should be able to set up three notification times for each selected habit: morning, afternoon, and evening (e.g., "Morning: 8:00 AM, Afternoon: 2:00 PM, Evening: 7:00 PM").
+2. The user should be able to select these times either via a time picker or predefined time slots (e.g., 8:00 AM, 2:00 PM, 7:00 PM).
+3. The user should have the ability to customize these times or use default values (e.g., the default could be set to 8:00 AM, 2:00 PM, and 7:00 PM for all habits).
+4. Once the user sets these times, they should receive notifications at the chosen times for each habit.
+5. The user should be able to modify or remove any of the notification times at any point.
+6. The system should allow for flexible time slots, but not force the user to select all three times if they prefer fewer reminders.
+
+**Priority:** Medium
+
+**Story Points:** 5
+
+**Notes:**
+- Consider providing a brief explanation of why multiple reminders could be helpful (e.g., "Stay on track with reminders at key times of your day").
+- Allow the user to set or edit times for each habit individually, ensuring flexibility.
+- Make sure the notification times are based on the user’s time zone and update correctly if the user changes their location or time zone.
+
+---
+
+## Note on Notifications Page Layout
+
+- The notifications page should have an easy-to-use interface, with clear labels for each habit, toggle options, and time pickers.
+- Include a section or visual indication that shows the habits the user has enabled for notifications, along with their configured times.
+- Ensure the page is responsive and mobile-friendly, allowing the user to manage notifications with ease on any device.
+- Consider including a "Save" button to confirm changes to notification settings, or auto-save the changes when toggling options.
