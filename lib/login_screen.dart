@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habbit_tracker/habit_tracker_screen.dart';
 import 'package:habbit_tracker/utilities/toast.dart';
+import 'package:habbit_tracker/utilities/userPrefs.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,14 +16,19 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   // Default credentials
-  final String defaultUsername = 'testuser';
-  final String defaultPassword = 'password123';
+  // final String defaultUsername = 'testuser';
+  // final String defaultPassword = 'password123';
 
-  void _login() {
+  void _login() async {
     print("login logic here");
+
+    final userCreditsPrefs = await loadUserData();
+    final String userNamePrefs = userCreditsPrefs['userName'] as String;
+    final String passwordPrefs = userCreditsPrefs['userPassword'] as String;
+
     final username = _usernameController.text;
     final password = _passwordController.text;
-    if (username == defaultUsername && password == defaultPassword) {
+    if (username == userNamePrefs && password == passwordPrefs) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

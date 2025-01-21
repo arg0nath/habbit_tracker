@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habbit_tracker/add_habit_screen.dart';
+import 'package:habbit_tracker/utilities/userPrefs.dart';
 
 class HabitTrackerScreen extends StatefulWidget {
   final String username;
@@ -17,7 +18,13 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
 
   @override
   void initState() {
+    loadUserCreditsFromPrefs();
     super.initState();
+  }
+
+  Future<void> loadUserCreditsFromPrefs() async {
+    final userCreditsPrefs = await loadUserData();
+    name = userCreditsPrefs['userName'] as String;
   }
 
   Future<void> _saveHabits() async {
@@ -47,7 +54,52 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Text(
+                'Menu',
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              decoration: BoxDecoration(color: Colors.blueAccent),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Configure'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Personal Info'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.signal_cellular_alt_outlined),
+              title: Text('Repoorts'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.notifications_rounded),
+              title: Text('Notifications'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app_rounded),
+              title: Text('Sign Out'),
+              onTap: () {},
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.blue.shade700,
         title: Text(
           name.isNotEmpty ? name : 'Loading...',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:habbit_tracker/habit_tracker_screen.dart';
+import 'package:habbit_tracker/utilities/userPrefs.dart';
 import 'package:habbit_tracker/utilities/toast.dart';
 
 import 'login_screen.dart';
@@ -15,6 +16,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _nameController = TextEditingController();
   final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
   double _age = 25; // Default age set to 25
   String _country = 'United States';
   List<String> _countries = [];
@@ -40,11 +42,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _register() async {
     final name = _nameController.text;
     final username = _usernameController.text;
+    final password = _passwordController.text;
 
-    if (username.isEmpty || name.isEmpty) {
+    if (username.isEmpty || name.isEmpty || password.isEmpty) {
       showToast('Please fill in all fields', color: Colors.red);
       return;
     }
+
+    await saveUserData(userName: username, userPassword: password);
 
     Navigator.pushReplacement(
       context,
@@ -94,6 +99,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 _buildInputField(_nameController, 'Name', Icons.person),
                 const SizedBox(height: 10),
                 _buildInputField(_usernameController, 'Username', Icons.alternate_email),
+                const SizedBox(height: 10),
+                _buildInputField(_passwordController, 'Password', Icons.shield),
                 const SizedBox(height: 10),
                 Text('Age: ${_age.round()}', style: const TextStyle(color: Colors.white, fontSize: 18)),
                 Slider(
