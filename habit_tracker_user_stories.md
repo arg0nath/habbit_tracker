@@ -347,7 +347,7 @@ _As a user, I want to see both completed and incomplete habits in my report, so 
 - The report should show all habits the user is tracking, not just the completed ones.
 - Ensure incomplete habits are visually distinguished, possibly with an empty status or color-coding.
 
-# User Stories for Notifications Page
+## User Stories for Notifications Page
 
 ## Enable/Disable Notifications
 
