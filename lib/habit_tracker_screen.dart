@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:habbit_tracker/add_habit_screen.dart';
-import 'package:habbit_tracker/utilities/userPrefs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'add_habit_screen.dart';
 
 class HabitTrackerScreen extends StatefulWidget {
   final String username;
@@ -8,7 +11,7 @@ class HabitTrackerScreen extends StatefulWidget {
   const HabitTrackerScreen({super.key, required this.username});
 
   @override
-  State<HabitTrackerScreen> createState() => _HabitTrackerScreenState();
+  _HabitTrackerScreenState createState() => _HabitTrackerScreenState();
 }
 
 class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
@@ -18,17 +21,23 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
 
   @override
   void initState() {
-    loadUserCreditsFromPrefs();
     super.initState();
+    _loadUserData();
   }
 
-  Future<void> loadUserCreditsFromPrefs() async {
-    final userCreditsPrefs = await loadUserData();
-    name = userCreditsPrefs['userName'] as String;
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name = prefs.getString('name') ?? widget.username;
+      selectedHabitsMap = Map<String, String>.from(jsonDecode(prefs.getString('selectedHabitsMap') ?? '{}'));
+      completedHabitsMap = Map<String, String>.from(jsonDecode(prefs.getString('completedHabitsMap') ?? '{}'));
+    });
   }
 
   Future<void> _saveHabits() async {
-    //save habits to preferences in the future
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selectedHabitsMap', jsonEncode(selectedHabitsMap));
+    await prefs.setString('completedHabitsMap', jsonEncode(completedHabitsMap));
   }
 
   Color _getColorFromHex(String hexColor) {
@@ -54,52 +63,7 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Text(
-                'Menu',
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              decoration: BoxDecoration(color: Colors.blueAccent),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Configure'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Personal Info'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.signal_cellular_alt_outlined),
-              title: Text('Repoorts'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.notifications_rounded),
-              title: Text('Notifications'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app_rounded),
-              title: Text('Sign Out'),
-              onTap: () {},
-            )
-          ],
-        ),
-      ),
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: Colors.blue.shade700,
         title: Text(
           name.isNotEmpty ? name : 'Loading...',
@@ -170,9 +134,9 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
                     },
                   ),
                 ),
-          const Divider(),
+          Divider(),
           const Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               'Done ✅🎉',
               style: TextStyle(
@@ -209,7 +173,7 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
                         background: Container(
                           color: Colors.red,
                           alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
                           child: const Row(
                             children: [
                               Icon(Icons.undo, color: Colors.white),
@@ -236,11 +200,13 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
                   MaterialPageRoute(
                     builder: (context) => AddHabitScreen(),
                   ),
-                );
+                ).then((_) {
+                  _loadUserData(); // Reload data after returning
+                });
               },
+              child: Icon(Icons.add),
               backgroundColor: Colors.blue.shade700,
               tooltip: 'Add Habits',
-              child: const Icon(Icons.add),
             )
           : null,
     );
@@ -261,7 +227,7 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
               fontSize: 16,
             ),
           ),
-          trailing: isCompleted ? const Icon(Icons.check_circle, color: Colors.green, size: 28) : null,
+          trailing: isCompleted ? Icon(Icons.check_circle, color: Colors.green, size: 28) : null,
         ),
       ),
     );

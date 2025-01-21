@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habbit_tracker/habit_tracker_screen.dart';
 import 'package:habbit_tracker/utilities/toast.dart';
-import 'package:habbit_tracker/utilities/userPrefs.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,20 +15,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // Default credentials
-  // final String defaultUsername = 'testuser';
-  // final String defaultPassword = 'password123';
-
   void _login() async {
-    print("login logic here");
-
-    final userCreditsPrefs = await loadUserData();
-    final String userNamePrefs = userCreditsPrefs['userName'] as String;
-    final String passwordPrefs = userCreditsPrefs['userPassword'] as String;
-
     final username = _usernameController.text;
     final password = _passwordController.text;
-    if (username == userNamePrefs && password == passwordPrefs) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final usernameFromPrefs = await prefs.getString('username');
+    final passwordFromPrefs = await prefs.getString('password');
+
+    // Check against default credentials
+    if (username == usernameFromPrefs && password == passwordFromPrefs) {
+      await prefs.setString('name', 'Test User');
+      await prefs.setString('password', 'password123');
+      await prefs.setString('username', 'testuser');
+      await prefs.setDouble('age', 25);
+      await prefs.setString('country', 'United States');
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -36,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     } else {
+      await prefs.clear();
       showToast("Incorrect email or password", color: Colors.red);
     }
   }
@@ -140,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                      MaterialPageRoute(builder: (context) => RegisterScreen()),
                     );
                   },
                   style: OutlinedButton.styleFrom(

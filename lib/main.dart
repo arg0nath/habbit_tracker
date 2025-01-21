@@ -12,6 +12,7 @@ class HabitTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData().copyWith(appBarTheme: AppBarTheme().copyWith(centerTitle: true)),
       home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
