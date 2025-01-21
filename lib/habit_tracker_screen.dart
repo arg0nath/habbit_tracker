@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:habbit_tracker/login_screen.dart';
+import 'package:habbit_tracker/notifications_screen.dart';
 import 'package:habbit_tracker/personal_info_screen.dart';
 import 'package:habbit_tracker/reports_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,6 +135,13 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
             ListTile(
               leading: Icon(Icons.notifications),
               title: Text('Notifications'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NotificationsScreen()),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
